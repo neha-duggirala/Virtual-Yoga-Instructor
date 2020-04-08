@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Getting Started with ml5.js</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- p5 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.sound.min.js"></script>
+    <!-- ml5 -->
+    <script src="https://unpkg.com/ml5@0.4.3/dist/ml5.min.js"></script>
+</head>
+
+<body>
+    <script>
+        console.log('ml5 version:', ml5.version);
+        let video;
+        let poseNet;
+        let pose;
+        function setup() {
+            createCanvas(400, 400);
+            video = createCapture(VIDEO);
+            video.hide();
+            poseNet = ml5.poseNet(video, modelLoaded);
+            poseNet.on('pose', gotPoses);
+        }
+        function gotPoses(poses) {
+            if (poses.length > 0) {
+                pose = poses[0].pose;
+            }
+            console.log(pose);
+        }
+        function modelLoaded() {
+            console.log("YAyi PoseNet model is successfully loaded");
+        }
+
+        function draw() {
+            image(video, 0, 0);
+            if (pose && pose.score>0.14) {
+                fill(0, 255, 0);
+                for (let index = 0; index < pose.keypoints.length; index++) {
+                    
+                    ellipse(pose.keypoints[index].position.x, pose.keypoints[index].position.y, 40);
+                }
+                
+            }
+        }
+    </script>
+</body>
+
+</html>
