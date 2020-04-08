@@ -18,6 +18,7 @@
         let video;
         let poseNet;
         let pose;
+        let skeleton;
         function setup() {
             createCanvas(400, 400);
             video = createCapture(VIDEO);
@@ -28,6 +29,7 @@
         function gotPoses(poses) {
             if (poses.length > 0) {
                 pose = poses[0].pose;
+                skeleton=poses[0].skeleton;
             }
             console.log(pose);
         }
@@ -40,8 +42,16 @@
             if (pose && pose.score>0.14) {
                 fill(0, 255, 0);
                 for (let index = 0; index < pose.keypoints.length; index++) {
+
+                    ellipse(pose.keypoints[index].position.x, pose.keypoints[index].position.y, 32);
+                }
+                for (let index = 0; index < skeleton.length; index++) {
+                    let a = skeleton[index][0];
+                    let b = skeleton[index][1];
+                    strokeWeight(2);
+                    stroke(255);
+                    line(a.position.x,a.position.y,b.position.x,b.position.y)
                     
-                    ellipse(pose.keypoints[index].position.x, pose.keypoints[index].position.y, 40);
                 }
                 
             }
