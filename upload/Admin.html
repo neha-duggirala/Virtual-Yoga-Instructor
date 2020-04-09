@@ -9,6 +9,12 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/mobile.css">
     <script type='text/javascript' src='js/mobile.js'></script>
+    <!-- p5 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.sound.min.js"></script>
+    <!-- ml5 -->
+    <script src="https://unpkg.com/ml5@0.4.3/dist/ml5.min.js"></script>
 </head>
 
 <body>
@@ -32,6 +38,60 @@
             </li>
         </ul>
     </div>
+    <script>
+        console.log('ml5 version:', ml5.version);
+        let video;
+        let poseNet;
+        let pose;
+        let skeleton;
+        function setup() {
+            var cnv = createCanvas(windowWidth, 400);
+            cnv.position(350, 220);
+            video = createCapture(VIDEO);
+            video.hide();
+            poseNet = ml5.poseNet(video, modelLoaded);
+            poseNet.on('pose', gotPoses);
+        }
+        function gotPoses(poses) {
+            if (poses.length > 0) {
+                pose = poses[0].pose;
+                skeleton = poses[0].skeleton;
+            }
+            console.log(pose);
+        }
+        function modelLoaded() {
+            console.log("Yayi PoseNet model is successfully loaded");
+        }
+
+        function draw() {
+            image(video, 0, 0);
+            if (pose && pose.score > 0.14) {
+                let eyeR = pose.rightEye;
+                let eyeL = pose.leftEye;
+                let d = dist(eyeR.x, eyeR.y, eyeL.x, eyeL.y);
+                fill(0, 0, 255);
+                ellipse(pose.rightWrist.x, pose.rightWrist.y, 32);
+                ellipse(pose.leftWrist.x, pose.leftWrist.y, 32);
+                fill(0, 0, 0);
+                for (let i = 0; i < pose.keypoints.length; i++) {
+                    let x = pose.keypoints[i].position.x;
+                    let y = pose.keypoints[i].position.y;
+                    fill(0, 0, 0);
+                    ellipse(x, y, 16, 16);
+                }
+
+                for (let index = 0; index < skeleton.length; index++) {
+                    let a = skeleton[index][0];
+                    let b = skeleton[index][1];
+                    strokeWeight(2);
+                    stroke(255);
+                    line(a.position.x, a.position.y, b.position.x, b.position.y)
+
+                }
+
+            }
+        }
+    </script>
 </body>
 
 </html>

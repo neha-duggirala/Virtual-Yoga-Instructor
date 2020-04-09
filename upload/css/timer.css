@@ -1,0 +1,35 @@
+@import url(https://fonts.googleapis.com/css?family=Orbitron);
+
+
+#timer{
+  width:200px;
+  margin:auto;
+  font-size:200%;
+  font-family:Orbitron;
+  color:white;
+  display:block;
+}
+
+#controls{
+  width:200px;
+  margin:auto;
+  display:block;
+}
+
+.timer-btn{
+  color:white;
+  padding:20px;
+  font-family:Helvetica;
+  border-radius:9px;
+  cursor:pointer;
+  display:inline-block;
+  margin:auto;
+}
+
+#start{
+  background-color:green;
+}
+
+#stop{
+  background-color:red;
+}
