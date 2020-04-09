@@ -28,8 +28,11 @@
             <li class="current">
                 <a href="Train.html">Practice</a>
             </li>
-            <li >
+            <li>
                 <a href="Report.html">Report</a>
+            </li>
+            <li>
+                <a href="Admin.html">Admin</a>
             </li>
         </ul>
     </div>
@@ -46,7 +49,7 @@
             // var x = (windowWidth - width) / 2;
             // var y = (windowHeight - height) / 2;
             // console.log(y,y);
-            cnv.position(350,220);
+            cnv.position(350, 220);
             video = createCapture(VIDEO);
             video.hide();
             poseNet = ml5.poseNet(video, modelLoaded);
