@@ -2,186 +2,84 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-        content="user-scalable=0, width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Admin to train the model</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="css/mobile.css">
-    <script type='text/javascript' src='js/mobile.js'></script>
-    <!-- p5 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.sound.min.js"></script>
-    <!-- ml5 -->
-    <script src="https://unpkg.com/ml5@0.4.3/dist/ml5.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="user-scalable=0, width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>Report</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="css/mobile.css">
+  <link rel="stylesheet" type="text/css" href="css/cards.css">
+  <script type='text/javascript' src='js/mobile.js'></script>
+  <script type='text/javascript' src='js/cards.js'></script>
 </head>
 
 <body>
-    <div id="header">
-        <!-- <h1><a href="index.html">Virtual Yoga Instructor<span>Rehabilitation Yoga</span></a></h1> -->
-        <ul id="navigation">
-            <li>
-                <a href="index.html">Home</a>
-            </li>
-            <li>
-                <a href="about.html">About</a>
-            </li>
-            <li>
-                <a href="Train.html">Practice</a>
-            </li>
-            <li>
-                <a href="Report.html">Report</a>
-            </li>
-            <li class="current">
-                <a href="Admin.html">Admin</a>
-            </li>
-        </ul>
+  <div id="header">
+    <!-- <h1><a href="index.html">Virtual Yoga Instructor<span>Rehabilitation Yoga</span></a></h1> -->
+    <ul id="navigation">
+      <li>
+        <a href="index.html">Home</a>
+      </li>
+      <li>
+        <a href="about.html">About</a>
+      </li>
+      <li>
+        <a href="Train.html">Practice</a>
+      </li>
+      <li>
+        <a href="Report.html">Report</a>
+      </li>
+      <li class="current">
+        <a href="Admin.html">Admin</a>
+      </li>
+    </ul>
+  </div>
+  <main class="page-content">
+
+    <div class="card">
+      <div class="content">
+        <h2 class="title">Namaskar</h2>
+        <p class="copy">Stand at the end of your mat, keep your feet together and distribute your weight on both feet
+          equally.
+          Open your chest and just relax your shoulders.
+        </p>
+        <a href="Train.html">
+          <button class="btn">Practice</button>
+        </a>
+      </div>
     </div>
-    <script>
-        let video;
-        let poseNet;
-        let pose;
-        let skeleton;
+    <div class="card">
+      <div class="content">
+        <h2 class="title">Warrior Pose 2</h2>
+        <p class="copy">standing with your feet hip-distance apart and your arms at your sides. Let go of distractions.
+          Draw your awareness inward, to the center of your body. Turn to the left.</p>
+          <a href="Train.html">
+            <button class="btn">Practice</button>
+          </a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="content">
+        <h2 class="title">Hastauttanasana</h2>
+        <p class="copy">Breath in and lift your arms up and back.
+          Make sure that your biceps are close to your ears.
+          Make effort to stretch your whole body starting from the heels up to the finger tips.</p>
+          <a href="Train.html">
+            <button class="btn">Practice</button>
+          </a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="content">
+        <h2 class="title">Relax</h2>
+        <p class="copy">This one is a deeply relaxing posture. Gives you deep rest and total relaxation of the back.</p>
+        <a href="Train.html">
+          <button class="btn">Practice</button>
+        </a>
+      </div>
+    </div>
+  </main>
 
-        let brain;
-        let poseLabel = "No";
-
-        let state = 'waiting';
-        let targetLabel;
-
-        function keyPressed() {
-            if (key == 't') {
-                brain.normalizeData();
-                brain.train({ epochs: 50 }, finished);
-            } else if (key == 's') {
-                brain.saveData();
-            } else {
-                targetLabel = key;
-                console.log(targetLabel);
-                setTimeout(function () {
-                    console.log('collecting');
-                    state = 'collecting';
-                    setTimeout(function () {
-                        console.log('not collecting');
-                        state = 'waiting';
-                    }, 9000);
-                }, 1000);
-            }
-        }
-
-        function setup() {
-            createCanvas(640, 480);
-            video = createCapture(VIDEO);
-            video.hide();
-            poseNet = ml5.poseNet(video, modelLoaded);
-            poseNet.on('pose', gotPoses);
-
-            let options = {
-                inputs: 34,
-                outputs: 4,
-                task: 'classification',
-                debug: true
-            }
-            brain = ml5.neuralNetwork(options);
-            // brain.loadData('model3/data_4L.json', dataReady);
-        }
-
-        function brainLoaded() {
-            console.log('pose classification ready!');
-            classifyPose();
-        }
-
-        function classifyPose() {
-            if (pose) {
-                let inputs = [];
-                for (let i = 0; i < pose.keypoints.length; i++) {
-                    let x = pose.keypoints[i].position.x;
-                    let y = pose.keypoints[i].position.y;
-                    inputs.push(x);
-                    inputs.push(y);
-                }
-                brain.classify(inputs, gotResult);
-            } else {
-                setTimeout(classifyPose, 100);
-            }
-        }
-
-        function gotResult(error, results) {
-            if (results[0].confidence) {
-                poseLabel = results[0].label.toUpperCase();
-            }
-            classifyPose();
-        }
-
-        function dataReady() {
-            brain.normalizeData();
-            brain.train({
-                epochs: 75
-            }, finished);
-        }
-
-        function finished() {
-            console.log('model trained');
-            brain.save();
-            classifyPose();
-        }
-
-        function gotPoses(poses) {
-            // console.log(poses); 
-            if (poses.length > 0) {
-                pose = poses[0].pose;
-                skeleton = poses[0].skeleton;
-                if (state == 'collecting') {
-                    let inputs = [];
-                    for (let i = 0; i < pose.keypoints.length; i++) {
-                        let x = pose.keypoints[i].position.x;
-                        let y = pose.keypoints[i].position.y;
-                        inputs.push(x);
-                        inputs.push(y);
-                    }
-                    let target = [targetLabel];
-                    brain.addData(inputs, target);
-                }
-            }
-        }
-
-        function modelLoaded() {
-            console.log('poseNet ready');
-        }
-
-        function draw() {
-            push();
-            translate(video.width, 0);
-            scale(-1, 1);
-            image(video, 0, 0, video.width, video.height);
-
-            if (pose) {
-                for (let i = 0; i < skeleton.length; i++) {
-                    let a = skeleton[i][0];
-                    let b = skeleton[i][1];
-                    strokeWeight(2);
-                    stroke(0);
-
-                    line(a.position.x, a.position.y, b.position.x, b.position.y);
-                }
-                for (let i = 0; i < pose.keypoints.length; i++) {
-                    let x = pose.keypoints[i].position.x;
-                    let y = pose.keypoints[i].position.y;
-                    fill(0);
-                    stroke(255);
-                    ellipse(x, y, 16, 16);
-                }
-            }
-            pop();
-
-            fill(255, 0, 255);
-            noStroke();
-            textSize(512);
-            textAlign(CENTER, CENTER);
-            text(poseLabel, width / 2, height / 2);
-        }
-    </script>
 </body>
 
 </html>

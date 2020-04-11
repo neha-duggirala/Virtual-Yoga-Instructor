@@ -1,0 +1,132 @@
+
+  
+  h2 {
+    margin: 35px;
+    font-weight: 300;
+  }
+  
+  .content {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .report-statistic-box {
+    float: left;
+    width: 25%;
+    height: 275px;
+    background-color: #fafafa;
+    border-right: 2px solid #ececec;
+    text-align: center;
+  }
+  
+  .report-statistic-box .box-header {
+    background-color: #f2f2f2;
+    font-weight: 400;
+    font-size: 15px;
+    height: 60px;
+    padding-top: 20px;
+  }
+  
+  .report-statistic-box .box-header span {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+  }
+  
+  .report-statistic-box .box-header .icon-sent {
+    background: url(../images/icon_sent.svg);
+  }
+  
+  .report-statistic-box .box-header .icon-delivery {
+    background: url(../images/icon_delivery.svg);
+  }
+  
+  .report-statistic-box .box-header .icon-openrate {
+    background: url(../images/icon_openrate.svg);
+  }
+  
+  .report-statistic-box .box-header .icon-ctor {
+    background: url(../images/icon_ctor.svg);
+  }
+  
+  .report-statistic-box .box-content {
+    position: relative;
+    margin: 20px auto 15px;
+    width: 130px;
+    height: 130px;
+  }
+  
+  .report-statistic-box .box-content .sentTotal {
+    font-size: 46px;
+    font-weight: 400;
+    color: #80cdbe;
+    padding-top: 32px;
+  }
+  
+  .report-statistic-box .box-content .percentage {
+    position: absolute;
+    font-size: 28px;
+    top: 34%;
+    left: 31%;
+  }
+  
+  .report-statistic-box .box-content .conversionValue {
+    font-size: 28px;
+    font-weight: 300;
+    color: #f5ab34;
+    padding-top: 46px;
+  }
+  
+  .conversionValue .conversionCurrency {
+    font-size: 18px;
+    font-weight: 400;
+    color: #f5ab34;
+    padding-top: 46px;
+  }
+  
+  .report-statistic-box .delivery-rate {
+    color: #f5ab34;
+  }
+  
+  .report-statistic-box .open-rate {
+    color: #30afe4;
+  }
+  
+  .report-statistic-box .click-to-open {
+    color: #80cdbe;
+  }
+  
+  .report-statistic-box .box-foot {
+    position: relative;
+    font-size: 13px;
+    font-weight: 400;
+    padding: 0 20px;
+  }
+  
+  .report-statistic-box .box-foot .box-foot-stats {
+    font-size: 15px;
+  }
+  
+  .report-statistic-box .box-foot .box-foot-left {
+    float: left;
+    text-align: left;
+  }
+  
+  .report-statistic-box .box-foot .box-foot-right {
+    float: right;
+    text-align: right;
+  }
+  
+  .report-statistic-box .box-foot .arrow {
+    display: none;
+    position: absolute;
+    width: 15px;
+    height: 15px;
+  }
+  
+  @media (max-width: 1024px) {
+    .report-statistic-box {
+      width: 50%;
+    }
+  }
