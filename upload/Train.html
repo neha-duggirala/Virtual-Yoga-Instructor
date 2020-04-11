@@ -44,16 +44,13 @@
         <div onclick="stopwatch.start();" class="timer-btn" id="start">Start</div>
         <div onclick="stopwatch.stop();" class="timer-btn" id="stop">Stop</div>
     </div>
-
-
     <script>
         let video;
         let poseNet;
         let pose;
         let skeleton;
-
         let brain;
-        let poseLabel = "No";
+        let poseLabel;
 
         function setup() {
             var cnv = createCanvas(windowWidth, 400);
@@ -71,9 +68,9 @@
             }
             brain = ml5.neuralNetwork(options);
             const modelInfo = {
-                model: 'model2/model.json',
-                metadata: 'model2/model_meta.json',
-                weights: 'model2/model.weights.bin',
+                model: 'model3/model.json',
+                metadata: 'model3/model_meta.json',
+                weights: 'model3/model.weights.bin',
             };
             brain.load(modelInfo, brainLoaded);
         }
@@ -99,7 +96,7 @@
         }
 
         function gotResult(error, results) {
-            if (results[0].confidence) {
+            if (results[0].confidence > 0.75) {
                 poseLabel = results[0].label.toUpperCase();
             }
             console.log(poseLabel);
@@ -113,7 +110,6 @@
                 skeleton = poses[0].skeleton;
             }
         }
-
 
         function modelLoaded() {
             console.log('poseNet ready');
@@ -151,7 +147,7 @@
             text(poseLabel, width / 2, height / 2);
         }
 
-    
+
     </script>
 </body>
 
