@@ -34,7 +34,7 @@
                 <a href="Report.html">Report</a>
             </li>
             <li>
-                <a href="Admin.html">Admin</a>
+                <a href="Admin.html">List</a>
             </li>
         </ul>
     </div>
@@ -51,8 +51,9 @@
         let skeleton;
         let brain;
         let poseLabel;
-
+        let score=0;
         function setup() {
+            poseNumber = localStorage.getItem("poseNumber");
             var cnv = createCanvas(windowWidth, 400);
             cnv.position(350, 190);
             video = createCapture(VIDEO);
@@ -100,6 +101,10 @@
                 poseLabel = results[0].label.toUpperCase();
             }
             console.log(poseLabel);
+            if(poseLabel == poseNumber)
+            {
+                score = score+1;
+            }
             classifyPose();
         }
 
@@ -144,7 +149,7 @@
             noStroke();
             textSize(512);
             textAlign(CENTER, CENTER);
-            text(poseLabel, width / 2, height / 2);
+            text(score, width / 2, height / 2);
         }
 
 

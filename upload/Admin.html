@@ -10,7 +10,6 @@
   <link rel="stylesheet" type="text/css" href="css/mobile.css">
   <link rel="stylesheet" type="text/css" href="css/cards.css">
   <script type='text/javascript' src='js/mobile.js'></script>
-  <script type='text/javascript' src='js/cards.js'></script>
 </head>
 
 <body>
@@ -30,7 +29,7 @@
         <a href="Report.html">Report</a>
       </li>
       <li class="current">
-        <a href="Admin.html">Admin</a>
+        <a href="Admin.html">List</a>
       </li>
     </ul>
   </div>
@@ -44,7 +43,7 @@
           Open your chest and just relax your shoulders.
         </p>
         <a href="Train.html">
-          <button class="btn">Practice</button>
+          <button onclick="poseNumber(1)" class="btn">Practice</button>
         </a>
       </div>
     </div>
@@ -53,9 +52,9 @@
         <h2 class="title">Warrior Pose 2</h2>
         <p class="copy">standing with your feet hip-distance apart and your arms at your sides. Let go of distractions.
           Draw your awareness inward, to the center of your body. Turn to the left.</p>
-          <a href="Train.html">
-            <button class="btn">Practice</button>
-          </a>
+        <a href="Train.html">
+          <button onclick="poseNumber(2)" class="btn">Practice</button>
+        </a>
       </div>
     </div>
     <div class="card">
@@ -64,9 +63,9 @@
         <p class="copy">Breath in and lift your arms up and back.
           Make sure that your biceps are close to your ears.
           Make effort to stretch your whole body starting from the heels up to the finger tips.</p>
-          <a href="Train.html">
-            <button class="btn">Practice</button>
-          </a>
+        <a href="Train.html">
+          <button onclick="poseNumber(3)" class="btn">Practice</button>
+        </a>
       </div>
     </div>
     <div class="card">
@@ -74,12 +73,29 @@
         <h2 class="title">Relax</h2>
         <p class="copy">This one is a deeply relaxing posture. Gives you deep rest and total relaxation of the back.</p>
         <a href="Train.html">
-          <button class="btn">Practice</button>
+          <button onclick="poseNumber(4)" class="btn">Practice</button>
+        </a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="content">
+
+        <h2 class="title">Add New</h2>
+        <a href="New Pose.html">
+          <button class="btn">New Pose</button>
+        </a>
         </a>
       </div>
     </div>
   </main>
 
+  <script>
+    function poseNumber(num) {
+      alert(num);
+      localStorage.setItem("poseNumber",num);
+    }
+    
+  </script>
 </body>
 
 </html>
