@@ -7,8 +7,10 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/mobile.css">
     <link rel="stylesheet" type="text/css" href="css/timer.css">
+    <link rel="stylesheet" type="text/css" href="css/gauge.css">
     <script type='text/javascript' src='js/mobile.js'></script>
     <script type='text/javascript' src='js/timer.js'></script>
+    <script type='text/javascript' src='js/gauge.js'></script>
 
     <!-- p5 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js"></script>
@@ -44,116 +46,137 @@
         <div onclick="stopwatch.start();" class="timer-btn" id="start">Start</div>
         <div onclick="stopwatch.stop();" class="timer-btn" id="stop">Stop</div>
     </div>
-    <script>
-        let video;
-        let poseNet;
-        let pose;
-        let skeleton;
-        let brain;
-        let poseLabel;
-        let score=0;
-        function setup() {
-            poseNumber = localStorage.getItem("poseNumber");
-            var cnv = createCanvas(windowWidth, 400);
-            cnv.position(350, 190);
-            video = createCapture(VIDEO);
-            video.hide();
-            poseNet = ml5.poseNet(video, modelLoaded);
-            poseNet.on('pose', gotPoses);
 
-            let options = {
-                inputs: 34,
-                outputs: 4,
-                task: 'classification',
-                debug: true
+    <div class="container">
+
+        <div class="gauge-container">
+
+            <svg class="gauge" viewBox="0 0 150 150" preserveAscpectRatio="xMinYMin Meet">
+                <circle class="rail" r="67" cx="75" cy="75" />
+                <circle class="progress" r="67" data-target="84" cx="75" cy="75" />
+            </svg>
+            <span class="center percentage"><span class="value">48</span><span class="percentSymbol">%</span></span>
+
+        </div>
+        <h1>Energy Meter</h1>
+        <!-- <span>
+            <img src="images/neha.jpg" alt="" srcset="">
+        </span> -->
+        <script>
+            let video;
+            let poseNet;
+            let pose;
+            let skeleton;
+            let brain;
+            let poseLabel ="           Namaskar";
+            let score = 0;
+            let posesList = {
+                1:"Namaskar",
+                2:"Warrior Pose 2",
+                3:"Hastauttanasana",
+                4:"Relax"
             }
-            brain = ml5.neuralNetwork(options);
-            const modelInfo = {
-                model: 'model3/model.json',
-                metadata: 'model3/model_meta.json',
-                weights: 'model3/model.weights.bin',
-            };
-            brain.load(modelInfo, brainLoaded);
-        }
+            function setup() {
+                poseNumber = localStorage.getItem("poseNumber");
+                var cnv = createCanvas(windowWidth, 400);
+                cnv.position(350, 190);
+                video = createCapture(VIDEO);
+                video.hide();
+                poseNet = ml5.poseNet(video, modelLoaded);
+                poseNet.on('pose', gotPoses);
 
-        function brainLoaded() {
-            console.log('pose classification ready!');
-            classifyPose();
-        }
-
-        function classifyPose() {
-            if (pose) {
-                let inputs = [];
-                for (let i = 0; i < pose.keypoints.length; i++) {
-                    let x = pose.keypoints[i].position.x;
-                    let y = pose.keypoints[i].position.y;
-                    inputs.push(x);
-                    inputs.push(y);
+                let options = {
+                    inputs: 34,
+                    outputs: 4,
+                    task: 'classification',
+                    debug: true
                 }
-                brain.classify(inputs, gotResult);
-            } else {
-                setTimeout(classifyPose, 100);
+                brain = ml5.neuralNetwork(options);
+                const modelInfo = {
+                    model: 'model3/model.json',
+                    metadata: 'model3/model_meta.json',
+                    weights: 'model3/model.weights.bin',
+                };
+                brain.load(modelInfo, brainLoaded);
             }
-        }
 
-        function gotResult(error, results) {
-            if (results[0].confidence > 0.75) {
-                poseLabel = results[0].label.toUpperCase();
+            function brainLoaded() {
+                console.log('pose classification ready!');
+                classifyPose();
             }
-            console.log(poseLabel);
-            if(poseLabel == poseNumber)
-            {
-                score = score+1;
-            }
-            classifyPose();
-        }
 
-
-        function gotPoses(poses) {
-            if (poses.length > 0) {
-                pose = poses[0].pose;
-                skeleton = poses[0].skeleton;
-            }
-        }
-
-        function modelLoaded() {
-            console.log('poseNet ready');
-        }
-
-        function draw() {
-            push();
-            translate(video.width, 0);
-            scale(-1, 1);
-            image(video, 0, 0, video.width, video.height);
-
-            if (pose) {
-                for (let i = 0; i < skeleton.length; i++) {
-                    let a = skeleton[i][0];
-                    let b = skeleton[i][1];
-                    strokeWeight(2);
-                    stroke(0);
-
-                    line(a.position.x, a.position.y, b.position.x, b.position.y);
-                }
-                for (let i = 0; i < pose.keypoints.length; i++) {
-                    let x = pose.keypoints[i].position.x;
-                    let y = pose.keypoints[i].position.y;
-                    fill(0);
-                    stroke(255);
-                    ellipse(x, y, 16, 16);
+            function classifyPose() {
+                if (pose) {
+                    let inputs = [];
+                    for (let i = 0; i < pose.keypoints.length; i++) {
+                        let x = pose.keypoints[i].position.x;
+                        let y = pose.keypoints[i].position.y;
+                        inputs.push(x);
+                        inputs.push(y);
+                    }
+                    brain.classify(inputs, gotResult);
+                } else {
+                    setTimeout(classifyPose, 100);
                 }
             }
-            pop();
 
-            fill(255, 0, 255);
-            noStroke();
-            textSize(512);
-            textAlign(CENTER, CENTER);
-            text(score, width / 2, height / 2);
-        }
+            function gotResult(error, results) {
+                if (results[0].confidence > 0.75) {
+                    // poseLabel = results[0].label.toUpperCase();
+                }
+                // poseLabel = posesList[poseLabel];
+                if (poseLabel == poseNumber) {
+                    score = score + 1;
+                }
+                classifyPose();
+            }
 
 
-    </script>
+            function gotPoses(poses) {
+                if (poses.length > 0) {
+                    pose = poses[0].pose;
+                    skeleton = poses[0].skeleton;
+                }
+            }
+
+            function modelLoaded() {
+                console.log('poseNet ready');
+            }
+
+            function draw() {
+                push();
+                translate(video.width, 0);
+                scale(-1, 1);
+                image(video, 0, 0, video.width, video.height);
+
+                if (pose) {
+                    for (let i = 0; i < skeleton.length; i++) {
+                        let a = skeleton[i][0];
+                        let b = skeleton[i][1];
+                        strokeWeight(2);
+                        stroke(0);
+
+                        line(a.position.x, a.position.y, b.position.x, b.position.y);
+                    }
+                    for (let i = 0; i < pose.keypoints.length; i++) {
+                        let x = pose.keypoints[i].position.x;
+                        let y = pose.keypoints[i].position.y;
+                        fill(0);
+                        stroke(255);
+                        ellipse(x, y, 16, 16);
+                    }
+                }
+                pop();
+
+                fill(0,255,0);
+                noStroke();
+                textSize(50);
+                textAlign(CENTER, CENTER);
+                text(poseLabel, width / 2, height / 3);
+            }
+
+
+        </script>
 </body>
 
 </html>

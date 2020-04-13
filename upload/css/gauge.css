@@ -1,0 +1,109 @@
+/* Here's where I got these color combos
+https://designschool.canva.com/blog/100-color-combinations/
+*/
+*, *::before, *::after {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+  }
+ 
+  
+ 
+  h1
+  {
+      color: antiquewhite;
+  }
+  .container {
+    height: 35%;
+    width: 55%;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+  }
+  .container .title {
+    text-align: center;
+    padding: 0 0 0;
+    margin: 0;
+  }
+  
+  
+  .container:first-of-type .progress {
+    stroke: #d8412f;
+  }
+  
+  .container:nth-of-type(2) {
+    background-color: #ed5752;
+  }
+  .container:nth-of-type(2) .rail {
+    stroke: #ffccac;
+  }
+  .container:nth-of-type(2) .progress {
+    stroke: #cb0000;
+  }
+  .container:nth-of-type(2) .icon {
+    color: #cb0000;
+  }
+  
+  .container:nth-of-type(3) .rail {
+    stroke: #ffec5c;
+  }
+  .container:nth-of-type(3) .progress {
+    stroke: #efb509;
+  }
+  .container:nth-of-type(3) .icon {
+    color: #efb509;
+  }
+  .container:nth-of-type(4) {
+    background-color: #98dbc6;
+  }
+  .container:nth-of-type(4) .rail {
+    stroke: #d0e1f9;
+  }
+  .container:nth-of-type(4) .progress {
+    stroke: #31a2ac;
+  }
+  .container:nth-of-type(4) .icon {
+    color: #31a2ac;
+  }
+  
+  .gauge-container {
+    display: inline-block;
+    position: relative;
+    width: 70%;
+  }
+  .gauge-container .gauge {
+    position: relative;
+    display: block;
+  }
+  .gauge-container .gauge circle {
+    stroke-width: 15;
+  }
+  .gauge-container .gauge .rail {
+    fill: transparent;
+  }
+  .gauge-container .gauge .progress {
+    fill: transparent;
+    stroke-linecap: round;
+  }
+  .gauge-container .center {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 300;
+  }
+  .gauge-container .center.percentage {
+    font-size: 3.2vw;
+    color: antiquewhite;
+  }
+  .gauge-container .center.icon {
+    font-size: 3vw;
+  }
+  .gauge-container .center .percentSymbol {
+    font-size: .8em;
+  }
+  .gauge-container .center .value {
+    font-size: 1.8em;
+  }
+  
