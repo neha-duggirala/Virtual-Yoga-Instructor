@@ -55,7 +55,7 @@
                 <circle class="rail" r="67" cx="75" cy="75" />
                 <circle class="progress" r="67" data-target="84" cx="75" cy="75" />
             </svg>
-            <span class="center percentage"><span class="value">48</span><span class="percentSymbol">%</span></span>
+            <span class="center percentage"><span class="value" id="energyMeter"></span><span class="percentSymbol"></span></span>
 
         </div>
         <h1>Energy Meter</h1>
@@ -68,8 +68,9 @@
             let pose;
             let skeleton;
             let brain;
-            let poseLabel ="           Namaskar";
-            let score = 0;
+            let Label;
+            let poseLabel ="           ";
+            let energy = 0;
             let posesList = {
                 1:"Namaskar",
                 2:"Warrior Pose 2",
@@ -93,9 +94,9 @@
                 }
                 brain = ml5.neuralNetwork(options);
                 const modelInfo = {
-                    model: 'model3/model.json',
-                    metadata: 'model3/model_meta.json',
-                    weights: 'model3/model.weights.bin',
+                    model: 'model4/model.json',
+                    metadata: 'model4/model_meta.json',
+                    weights: 'model4/model.weights.bin',
                 };
                 brain.load(modelInfo, brainLoaded);
             }
@@ -122,11 +123,15 @@
 
             function gotResult(error, results) {
                 if (results[0].confidence > 0.75) {
-                    // poseLabel = results[0].label.toUpperCase();
+                    Label = results[0].label.toUpperCase();
                 }
-                // poseLabel = posesList[poseLabel];
-                if (poseLabel == poseNumber) {
-                    score = score + 1;
+                console.log(Label);
+                poseLabel = "           " + posesList[Label];
+                if(poseNumber == Label)
+                {
+                console.log("Same");
+                energy+=0.5;
+                document.getElementById("energyMeter").innerHTML=energy;
                 }
                 classifyPose();
             }
@@ -172,7 +177,7 @@
                 noStroke();
                 textSize(50);
                 textAlign(CENTER, CENTER);
-                text(poseLabel, width / 2, height / 3);
+                // text(poseLabel, width/4 , height/2 );
             }
 
 

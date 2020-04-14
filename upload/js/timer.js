@@ -31,6 +31,7 @@ var stopwatch = {
     }, 10);
     },
   stop: function(){
+    alert("If you want to check you report please visit the report page");
     clearInterval(count);
  document.getElementById("start").firstChild.nodeValue = "Restart";
   },

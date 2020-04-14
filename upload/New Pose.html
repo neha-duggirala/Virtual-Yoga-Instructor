@@ -44,15 +44,15 @@
     </div>
     <div class="login-page">
         <div class="form">
-          
-          <form class="login-form">
-            <input type="text" placeholder="Number of asanas"/>
-            <input type="text" placeholder="Names of asanas----CSV format----"/>
-            <button>Submit</button>
-            
-          </form>
+
+            <form class="login-form">
+                <input type="text" placeholder="Number of asanas" />
+                <input type="text" placeholder="Names of asanas----CSV format----" />
+                <button>Submit</button>
+
+            </form>
         </div>
-      </div>
+    </div>
     <script>
         let video;
         let poseNet;
@@ -66,10 +66,12 @@
         let targetLabel;
 
         function keyPressed() {
-            if (key == 't') {
+            if (key == 't') //train
+            {
                 brain.normalizeData();
                 brain.train({ epochs: 50 }, finished);
-            } else if (key == 's') {
+            } else if (key == 's') //save JSON data
+            {
                 brain.saveData();
             } else {
                 targetLabel = key;
@@ -99,7 +101,7 @@
                 debug: true
             }
             brain = ml5.neuralNetwork(options);
-            // brain.loadData('model3/data_4L.json', dataReady);
+            // brain.loadData('model4/data.json', dataReady);
         }
 
         function brainLoaded() {
@@ -132,7 +134,7 @@
         function dataReady() {
             brain.normalizeData();
             brain.train({
-                epochs: 75
+                epochs: 150
             }, finished);
         }
 
