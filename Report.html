@@ -10,10 +10,9 @@
     <link rel="stylesheet" type="text/css" href="css/mobile.css">
     <link rel="stylesheet" type="text/css" href="css/report.css">
     <script type='text/javascript' src='js/mobile.js'></script>
-    <script type='text/javascript' src='js/report.js'></script>
 </head>
 
-<body>
+<body  onload="reports()">
     <div id="header">
         <!-- <h1><a href="index.html">Virtual Yoga Instructor<span>Rehabilitation Yoga</span></a></h1> -->
         <ul id="navigation">
@@ -35,24 +34,43 @@
         </ul>
     </div>
     <div class="container">
-        <div class="bookmark"></div>
-        <div class="notepad">
-          <svg id="smiley" viewBox="0 0 532 372" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-          <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-              <g id="Face">
-                  <ellipse id="eye-left" fill="#000" cx="72.5" cy="68.5" rx="72.5" ry="68.5"></ellipse>
-                  <ellipse id="eye-right" fill="#000" cx="459.5" cy="68.5" rx="72.5" ry="68.5"></ellipse>
-                  <path d="M145,236.5 C145,401.46875 386.59375,406.03125 386.59375,233" id="Mouth" stroke="#000" stroke-width="20"></path>
-                  
-              </g>
-          </g>
-      </svg>
-      
-          <div class="ring"></div>
-        </div>
-      </div>
+		<div class="weather-card">
+			<div class="image-section">
+				<div class="layer"></div>
+				<div class="weather"></div>
+				<small class="type">YOGA</small>
+			</div>
+			<div class="info-section">
+				<div class="wave"></div>
+				<div class="layer-1"></div>
+				<div class="layer-2"></div>
+				<div class="layer-3"></div>
+				<div  class="contents">
+					<h1 id="pts"></h1>
+					<h3 id="pose"></h3>
+					<small id="time"></small>
+				</div>
+			</div>
+		</div>
+	</div>
     <script>
-        
+        function reports()
+        {
+            let posesList = {
+                1: "Namaskar",
+                2: "Warrior Pose 2",
+                3: "Hastauttanasana",
+                4: "Relax"
+            }
+            let poseNumber = localStorage.getItem("poseNumber");
+            energy = localStorage.getItem("energy");
+            document.getElementById("pts").innerHTML = energy+" Points";
+            document.getElementById("time").innerHTML = Date();
+            document.getElementById("pose").innerHTML = posesList[poseNumber];
+            // alert(posesList[poseNumber]+" "+energy);
+
+            
+        }
     </script>
 </body>
 

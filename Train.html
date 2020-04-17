@@ -10,8 +10,6 @@
     <link rel="stylesheet" type="text/css" href="css/gauge.css">
     <script type='text/javascript' src='js/mobile.js'></script>
     <script type='text/javascript' src='js/timer.js'></script>
-    <script type='text/javascript' src='js/gauge.js'></script>
-
     <!-- p5 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
@@ -55,10 +53,16 @@
                 <circle class="rail" r="67" cx="75" cy="75" />
                 <circle class="progress" r="67" data-target="84" cx="75" cy="75" />
             </svg>
-            <span class="center percentage"><span class="value" id="energyMeter"></span><span class="percentSymbol"></span></span>
+            <span class="center percentage"><span class="value" id="energyMeter"></span><span
+                    class="percentSymbol"></span></span>
 
         </div>
         <h1>Energy Meter</h1>
+        <div id="controls">
+            <a href="Report.html">
+            <div class="timer-btn" id="stop">Report</div>
+            </a>
+        </div>
         <!-- <span>
             <img src="images/neha.jpg" alt="" srcset="">
         </span> -->
@@ -69,13 +73,13 @@
             let skeleton;
             let brain;
             let Label;
-            let poseLabel ="           ";
+            let poseLabel = "           ";
             let energy = 0;
             let posesList = {
-                1:"Namaskar",
-                2:"Warrior Pose 2",
-                3:"Hastauttanasana",
-                4:"Relax"
+                1: "Namaskar",
+                2: "Warrior Pose 2",
+                3: "Hastauttanasana",
+                4: "Relax"
             }
             function setup() {
                 poseNumber = localStorage.getItem("poseNumber");
@@ -127,11 +131,12 @@
                 }
                 console.log(Label);
                 poseLabel = "           " + posesList[Label];
-                if(poseNumber == Label)
-                {
-                console.log("Same");
-                energy+=0.5;
-                document.getElementById("energyMeter").innerHTML=energy;
+                if (poseNumber == Label) {
+                    console.log("Same");
+                    energy += 0.5;
+                    document.getElementById("energyMeter").innerHTML = energy;
+                    localStorage.setItem("energy", energy);
+
                 }
                 classifyPose();
             }
@@ -173,7 +178,7 @@
                 }
                 pop();
 
-                fill(0,255,0);
+                fill(0, 255, 0);
                 noStroke();
                 textSize(50);
                 textAlign(CENTER, CENTER);

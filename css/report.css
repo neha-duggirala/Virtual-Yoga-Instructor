@@ -1,75 +1,131 @@
 
-  
-  svg {
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+.weather-card {
+	height: 450px;
+	width: 300px;
+	border-radius: 30px;
+	/* box-shadow:15px 20px 85px #d7c4bd; */
+	overflow: hidden;
+}
+.weather-card .image-section {
+	height: 57%;
+	background-image: url(../images/report-card.jpg);
+    /* background-position: -300px -60px; */
+    position: relative;
+    background-size: 90%;
+}
+.weather-card .image-section .weather {
+	height: 60px;
+    width: 60px;
     position: absolute;
-    top: 150px; left: 100px;
-    width: 100px;
-  }
-  .container {
+    top: 20px;
+    right: 20px;
+    display: inline-block;
+    /* background: url() -170px -76px no-repeat; */
+    background-size: 240px;
+}
+.weather-card .image-section .type {
+	text-transform: uppercase;
+    color: #ffffff;
     position: absolute;
-    margin: auto;
-    top: 0; bottom: 0;
-    left: -50px; right: 0;
-    width: 200px; height: 400px;
-    transform: scale(0.8);
-  }
-  
-  .notepad {
-    position: absolute;
-    width: 300px;
+    bottom: 60px;
+    right: 20px;
+    z-index: 9;
+    font-weight: 700;
+}
+.layer {
+	height: 100%;
+	width: 100%;
+	/* background: linear-gradient(141deg,#f9ebe2 30%, #e7c3bb 75%); */
+	position: absolute;
+    opacity: 0.6;
+}
+.weather-card .info-section {
+	height: 47%;
+	background: #fff;
+	position: relative;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.layer-1 {
+	position: absolute;
     height: 400px;
-    background: #7765B5;
-    border-radius: 5px 5px 5px 15px;
-  }
-  
-  .notepad:before {
-    z-index: -1;
-    content: '';
-    position: absolute;
-    top: 8px; left: 5px;
-    width: 300px;
-    height: 400px;
-    background: #FFF;
-    border-radius: 13px 13px 13px 20px;
-  }
-  
-  
-  .notepad:after {
-    z-index: -2;
-    content: '';
-    position: absolute;
-    top: 18px; left: 18px;
-    width: 300px;
-    height: 400px;
-    background: #666;
-    opacity: 0.3;
-    border-radius: 13px 13px 13px 20px;
-  }
-  
-  .ring {
-    position: absolute;
-    top: 15px; left: 10px;
-    width: 10px; height: 10px;
-    background: #FFF;
+    width: 290px;
     border-radius: 100%;
-  }
-  
-  .ring:before {
-    content: '';
-    position: absolute;
-    top: 3px; left: -15px;
-    width: 20px; height: 5px;
-    background: #319073;
-    border-radius: 3px;
-  }
-  
-  #ring {
-    position: absolute;
-  }
-  
-  .bookmark {
-    position: absolute;
-    top: -20px; left: 30px;
-    width: 30px; height: 30px;
-    background: #FFD97D;
-  }
+    background-color: rgba(255,255,255,0.5);
+    top: -40px;
+    left: -120px;
+}
+.layer-2 {
+	position: absolute;
+	height: 150px;
+	width: 210px;
+	border-radius: 100%;
+	background-color: rgba(255,255,255,0.5);
+	top: -50px;
+	left: 160px;
+}
+.layer-3 {
+	position: absolute;
+	height: 150px;
+	width: 230px;
+	border-radius: 100%;
+	background-color: rgba(255,255,255,0.5);
+	top: -27px;
+	left: 100px;
+}
+.wave {
+	position: absolute;
+    height: 31px;
+    /* background-image: url(); */
+    background-position: -110px 0px;
+    background-size: 100%;
+    width: 100%;
+    top: -30px;
+}
+.contents {
+	z-index: 9;
+    text-align: center;
+}
+.contents h1 {
+	margin: 0;
+    font-size: 50px;
+    line-height: 50px;
+    font-weight: 100;
+    position: relative;
+    color:#868383;
+}
+.contents h1 .deg {
+	position: absolute;
+	top:-15px;-webkit-animation:spin 4s linear infinite;
+    -moz-animation:spin 4s linear infinite;
+    animation:spin 4s linear infinite;
+}
+.contents h3 {
+	margin-bottom: 5px;
+    margin-top: 20px;
+    font-weight: 500;
+    color: #908e8e;
+    font-size: 30px;
+}
+.contents small {
+    color:#908e8e;
+}
+@-moz-keyframes spin { 
+  	from {transform: rotateY(0deg);}
+	to {transform: rotateY(359deg);}
+}
+@-webkit-keyframes spin { 
+  	from {transform: rotateY(0deg);}
+	to {transform: rotateY(359deg);}
+}
+@keyframes spin {
+  	from {transform: rotateY(0deg);}
+	to {transform: rotateY(359deg);}
+}
