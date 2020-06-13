@@ -36,4 +36,4 @@ smart assistant to provide corrective advice to guide practitioners.
 The goal is to help a user reduce stress, anxiety, and depression through a series of
 guide meditative poses.
 
-Visit the [Website](https://neha-duggirala.github.io/virtual-Yoga-Instructor/) for more info :smile:
+Visit the [Website](https://neha-duggirala.github.io/Virtual-Yoga-Instructor/) for more info :smile:
